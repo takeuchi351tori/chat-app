@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/caption.css" />
+
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-2.1.1.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
+    <title>grouplist</title>
+    <link rel="icon" href="/image/favicon.ico" />
+
+    <script src="/scripts/searchUser.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo center">Chat App</a>
+        <a href="#" data-target="mobile" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/message/general">全体</a></li>
+          <li><a href="/message/group">グループ</a></li>
+          <li><a href="/message/direct">DM</a></li>
+          <li>
+            <a href="/manager/groups"><i class="material-icons">refresh</i></a>
+          </li>
+          <li>
+            <a href="/user/setting"><i class="material-icons">settings</i></a>
+          </li>
+
+          <li>
+            <a href="/manager"><i class="material-icons">key</i></a>
+          </li>
+          <li>
+            <form action="/user/logout" method="post">
+              <button class="waves-effect waves-light btn pink lighten-3">
+                ログアウト
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="mobile">
+      <li>
+        <a href="/"><i class="material-icons">home</i>ホーム</a>
+      </li>
+      <li>
+        <a href="/message/general"><i class="material-icons">chat</i>全体</a>
+      </li>
+      <li>
+        <a href="/message/group"><i class="material-icons">chat</i>グループ</a>
+      </li>
+      <li>
+        <a href="/message/direct"><i class="material-icons">chat</i>DM</a>
+      </li>
+      <li>
+        <a href="/manager/groups"><i class="material-icons">refresh</i>更新</a>
+      </li>
+      <li>
+        <a href="/user/setting"><i class="material-icons">settings</i>設定</a>
+      </li>
+
+      <li>
+        <form action="/user/logout" method="post">
+          <button class="waves-effect waves-light btn pink lighten-3">
+            ログアウト
+          </button>
+        </form>
+      </li>
+      <li>
+        <form action="/manager" method="get">
+          <button class="wavoes-effect waves-light btn pink lighten-3">
+            <i class="material-icons">key</i>
+            管理者ページ
+          </button>
+        </form>
+      </li>
+    </ul>
+    <script>
+      $(document).ready(function () {
+        $(".sidenav").sidenav();
+      });
+    </script>
+    <div class="container">
+      <h1 hidden>グループ一覧</h1>
+      <div class="group-creation-form">
+        <h3>グループ一覧</h3>
+        <h5>新規グループ作成</h5>
+        <form action="/manager/groups" method="post">
+          <div>
+            <label for="group-name">new group-name</label>
+            <input type="text" name="groupName" id="group-name" />
+          </div>
+          <button class="waves-effect waves-light btn">create</button>
+        </form>
+      </div>
+      <br />
+    </div>
+    <div class="container">
+      <br />
+      <br />
+      <% if(listType === "active") { %>
+      <a class="waves-effect waves-light btn disabled" href="/manager/groups"
+        >グループ</a
+      >
+      <a class="waves-effect waves-light btn" href="/manager/invalidGroups"
+        >削除済みグループ</a
+      >
+      <% } else { %>
+      <a class="waves-effect waves-light btn" href="/manager/groups"
+        >グループ</a
+      >
+      <a
+        class="waves-effect waves-light btn disabled"
+        href="/manager/invalidGroups"
+        >削除済みグループ</a
+      >
+      <% } %>
+      <div>
+        <br />
+        <input
+          type="search"
+          class="light-table-filter"
+          data-table="order-table"
+          placeholder="グループ名"
+        />
+      </div>
+      <div>
+        <br />
+        <table class="order-table">
+          <caption class="caption">
+            <%= listName %>
+          </caption>
+          <thead>
+            <tr>
+              <th>グループ名</th>
+              <th>状態</th>
+              <th>メンバー</th>
+            </tr>
+          </thead>
+          <% for(const group of groupList) { %>
+          <tr>
+            <td>
+              <%= group.name %>
+              <form action="/manager/group/<%= group.id %>/name" method="post">
+                <input type="text" name="updateName" />
+                <button class="waves-effect waves-light btn">update</button>
+              </form>
+            </td>
+            <td>
+              <%= group.state %>
+              <form action="/manager/group/<%= group.id %>/state" method="post">
+                <select name="state">
+                  <option value="1">1(active)</option>
+                  <option value="0">0(deleted)</option>
+                </select>
+                <button class="waves-effect waves-light btn">update</button>
+              </form>
+            </td>
+            <td>
+              <% for(const user of group.users) { %>
+              <div><%= user.name %></div>
+              <% } %>
+            </td>
+          </tr>
+          <% } %>
+        </table>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $("select").formSelect();
+        });
+      </script>
+    </div>
+  </body>
+</html>

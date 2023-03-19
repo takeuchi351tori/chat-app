@@ -1,0 +1,42 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-2.1.1.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
+    <title>login</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>login</h1>
+    </div>
+    <div class="container">
+      <form action="/user/login" method="post">
+        <div>
+          <label for="employeeId">ID</label>
+          <input type="text" name="employeeId" id="employeeId" />
+        </div>
+        <div>
+          <label for="password">password</label>
+          <input type="password" name="password" id="password" />
+        </div>
+        <button class="waves-effect waves-light btn">send</button>
+      </form>
+    </div>
+  </body>
+</html>

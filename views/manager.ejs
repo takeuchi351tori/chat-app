@@ -1,0 +1,144 @@
+<!-- manager.ejs -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="/css/manager.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-2.1.1.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
+    <title>manager</title>
+    <link rel="icon" href="/image/favicon.ico" />
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo center">Chat App</a>
+        <a href="#" data-target="mobile" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/message/general">全体</a></li>
+          <li><a href="/message/group">グループ</a></li>
+          <li><a href="/message/direct">DM</a></li>
+          <li>
+            <a href="/manager"><i class="material-icons">refresh</i></a>
+          </li>
+          <li>
+            <a href="/user/setting"><i class="material-icons">settings</i></a>
+          </li>
+
+          <li>
+            <a href="/manager"><i class="material-icons">key</i></a>
+          </li>
+          <li>
+            <form action="/user/logout" method="post">
+              <button class="waves-effect waves-light btn pink lighten-3">
+                ログアウト
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="mobile">
+      <li>
+        <a href="/"><i class="material-icons">home</i>ホーム</a>
+      </li>
+      <li>
+        <a href="/message/general"><i class="material-icons">chat</i>全体</a>
+      </li>
+      <li>
+        <a href="/message/group"><i class="material-icons">chat</i>グループ</a>
+      </li>
+      <li>
+        <a href="/message/direct"><i class="material-icons">chat</i>DM</a>
+      </li>
+      <li>
+        <a href="/manager"><i class="material-icons">refresh</i>更新</a>
+      </li>
+      <li>
+        <a href="/user/setting"><i class="material-icons">settings</i>設定</a>
+      </li>
+
+      <li>
+        <form action="/user/logout" method="post">
+          <button class="waves-effect waves-light btn pink lighten-3">
+            ログアウト
+          </button>
+        </form>
+      </li>
+      <li>
+        <form action="/manager" method="get">
+          <button class="wavoes-effect waves-light btn pink lighten-3">
+            <i class="material-icons">key</i>
+            管理者ページ
+          </button>
+        </form>
+      </li>
+    </ul>
+    <script>
+      $(document).ready(function () {
+        $(".sidenav").sidenav();
+      });
+    </script>
+    <h1 hidden>manager</h1>
+    <div class="container">
+      <h3>管理者ページ</h3>
+      <div class="manager">
+        <div class="items">
+          <a href="/manager/users"
+            ><img
+              src="/image/user-list.png"
+              alt="ユーザリスト"
+              width="256"
+              height="256"
+              decoding="async"
+          /></a>
+          <div class="name">
+            <p>ユーザーリスト</p>
+          </div>
+        </div>
+        <div class="items">
+          <a href="/manager/signup"
+            ><img
+              src="/image/user.png"
+              alt="ユーザ追加"
+              width="256"
+              height="256"
+              decoding="async"
+          /></a>
+          <div class="name">
+            <p>ユーザー追加</p>
+          </div>
+        </div>
+        <div class="items">
+          <a href="/manager/groups"
+            ><img
+              src="/image/group_edit.png"
+              alt="グループ追加"
+              width="256"
+              height="256"
+              decoding="async"
+          /></a>
+          <div class="name">
+            <p>グループ追加</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+.manager {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.items {
+  display: flex;
+  flex-flow: column wrap;
+  flex: 1 100px;
+}
+
+.name {
+  font-size: 20px;
+  margin: auto auto 0 3em;
+}
+
+img {
+  width: 256px;
+}

@@ -1,0 +1,17 @@
+.entrances {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: row;
+}
+
+.chat {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  flex: 1 100px;
+}
+
+.name {
+  font-size: 20px;
+  margin: auto auto 0 3em;
+}

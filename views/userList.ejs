@@ -1,0 +1,184 @@
+<!-- userprofile.ejs -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/caption.css" />
+
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-2.1.1.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
+
+    <script src="/scripts/searchUser.js"></script>
+    <title>userprofile</title>
+    <link rel="icon" href="/image/favicon.ico" />
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo center">Chat App</a>
+        <a href="#" data-target="mobile" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/message/general">全体</a></li>
+          <li><a href="/message/group">グループ</a></li>
+          <li><a href="/message/direct">DM</a></li>
+          <li>
+            <a href="/manager/users"><i class="material-icons">refresh</i></a>
+          </li>
+          <li>
+            <a href="/user/setting"><i class="material-icons">settings</i></a>
+          </li>
+
+          <li>
+            <a href="/manager"><i class="material-icons">key</i></a>
+          </li>
+          <li>
+            <form action="/user/logout" method="post">
+              <button class="waves-effect waves-light btn pink lighten-3">
+                ログアウト
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="mobile">
+      <li>
+        <a href="/"><i class="material-icons">home</i>ホーム</a>
+      </li>
+      <li>
+        <a href="/message/general"><i class="material-icons">chat</i>全体</a>
+      </li>
+      <li>
+        <a href="/message/group"><i class="material-icons">chat</i>グループ</a>
+      </li>
+      <li>
+        <a href="/message/direct"><i class="material-icons">chat</i>DM</a>
+      </li>
+      <li>
+        <a href="/manager/users"><i class="material-icons">refresh</i>更新</a>
+      </li>
+      <li>
+        <a href="/user/setting"><i class="material-icons">settings</i>設定</a>
+      </li>
+
+      <li>
+        <form action="/user/logout" method="post">
+          <button class="waves-effect waves-light btn pink lighten-3">
+            ログアウト
+          </button>
+        </form>
+      </li>
+      <li>
+        <form action="/manager" method="get">
+          <button class="wavoes-effect waves-light btn pink lighten-3">
+            <i class="material-icons">key</i>
+            管理者ページ
+          </button>
+        </form>
+      </li>
+    </ul>
+    <script>
+      $(document).ready(function () {
+        $(".sidenav").sidenav();
+      });
+    </script>
+    <div class="container">
+      <h1 hidden>ユーザ一覧</h1>
+      <h3>ユーザ一覧</h3>
+      <br />
+      <% if(listType === "active") { %>
+      <a class="waves-effect waves-light btn disabled" href="/manager/users"
+        >アクティブユーザ</a
+      >
+      <a class="waves-effect waves-light btn" href="/manager/invalidUsers"
+        >削除済みユーザ</a
+      >
+      <% } else { %>
+      <a class="waves-effect waves-light btn" href="/manager/users"
+        >アクティブユーザ</a
+      >
+      <a
+        class="waves-effect waves-light btn disabled"
+        href="/manager/invalidUsers"
+        >削除済みユーザ</a
+      >
+      <% } %>
+      <br />
+        <input
+        type="search"
+        class="light-table-filter"
+        data-table="order-table"
+        placeholder="ID or 名前"
+      />
+        
+      <table class="order-table">
+        <caption class="caption">
+          <%= listName %>
+        </caption>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名前</th>
+            <th>権限レベル</th>
+            <th>所属グループ</th>
+          </tr>
+        </thead>
+        <% for(const user of users) { %>
+        <tr>
+          <td><%= user.employee_id %></td>
+          <td><%= user.name %></td>
+          <td>
+            <%= user.authority %>
+            <form
+              method="POST"
+              action="/manager/users/<%= user.employee_id %>/authority"
+            >
+              <select name="auth">
+                <option value="1">1(normal)</option>
+                <option value="2">2(manager)</option>
+                <option value="0">0(invalid)</option>
+              </select>
+              <button class="waves-effect waves-light btn">update</button>
+            </form>
+          </td>
+          <td>
+            <%= user.Group.name %>
+            <form
+              method="POST"
+              action="/manager/users/<%= user.employee_id %>/group"
+            >
+              <select name="group_id">
+                <% for(const group of groups) { %>
+                <option value="<%- group.id %>"><%= group.name %></option>
+                <% } %>
+              </select>
+              <button class="waves-effect waves-light btn">update</button>
+            </form>
+          </td>
+        </tr>
+        <% } %>
+      </table>
+
+      <script>
+        $(document).ready(function () {
+          $("select").formSelect();
+        });
+      </script>
+    </div>
+  </body>
+</html>
