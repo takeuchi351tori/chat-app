@@ -57,7 +57,7 @@ $ npm run delete
 ```
 
 ### 登録済みユーザ（初期状態）
-
 - ID:ee999999 pass:yx5Jvg (admin)
 - ID:ee000000 pass:debugger(debugger)
 - ID:ee111111 pass:guest (guest)
+- (src/setting.js 参照)
